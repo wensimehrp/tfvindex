@@ -77,7 +77,7 @@
         for img in dir.contents.filter(file => (
           file.type == "file" and file.name.ends-with(".png")
         )) {
-          image(src: img.name)
+          image(img.name)
         },
       )
     }))
