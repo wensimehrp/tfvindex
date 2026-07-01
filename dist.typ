@@ -36,7 +36,7 @@
     head({
       meta(charset: "utf-8")
       meta(name: "viewport", content: "width=device-width, initial-scale=1")
-      link(rel: "stylesheet", href: "/styles.css")
+      link(rel: "stylesheet", href: "/tfvindex/styles.css")
       style(
         "@import url('https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&display=swap');",
       )
@@ -75,9 +75,9 @@
       html.div(
         class: "flex flex-wrap gap-2 [&>img]:flex-auto [&>img]:m-0 [&>img]:w-20 [&>img]:h-24 [&>img]:object-contain [image-rendering:pixelated]",
         for img in dir.contents.filter(file => (
-          file.type == "file" and file.name.ends-with(".png.source")
+          file.type == "file" and file.name.ends-with(".png")
         )) {
-          html.img(src: read(img.name))
+          image(src: img.name)
         },
       )
     }))
