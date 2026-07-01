@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+./scrape.py
+tree -Jf output/* > data.json

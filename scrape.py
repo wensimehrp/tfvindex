@@ -117,13 +117,13 @@ async def secondary_worker(worker_id, secondary_queue, client, pbar):
         (output_dir, url) = await secondary_queue.get()
         try:
             filename = Path(url).name
-            file_path = output_dir / filename
+            # file_path = output_dir / filename
             source_path = output_dir / f"{filename}.source"
 
-            response = await client.get(url, timeout=10.0)
-            if response.status_code == 200:
-                file_path.write_bytes(response.content)
-                source_path.write_text(url, encoding="utf-8")
+            # response = await client.get(url, timeout=10.0)
+            # if response.status_code == 200:
+            #     file_path.write_bytes(response.content)
+            source_path.write_text(url, encoding="utf-8")
 
         except Exception as e:
             pbar.write(f"Error processing secondary {url}: {e}")

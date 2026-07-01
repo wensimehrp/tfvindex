@@ -36,6 +36,8 @@
             pkgs.python314Packages.types-beautifulsoup4
             pkgs.python314Packages.tqdm
             pkgs.python314Packages.html5lib
+            pkgs.tree
+            pkgs.typst
           ];
           UV_PYTHON = "${pkgs.python314}/bin/python";
         };
