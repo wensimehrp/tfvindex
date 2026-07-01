@@ -23,12 +23,12 @@
         pkgs = import nixpkgs {
           inherit system overlays;
         };
-        rustToolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+        # rustToolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
       in
       {
         devShells.default = pkgs.mkShell {
           buildInputs = [
-            rustToolchain
+            # rustToolchain
             pkgs.trunk
             pkgs.python314
             pkgs.python314Packages.httpx
