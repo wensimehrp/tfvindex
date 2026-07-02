@@ -48,15 +48,6 @@
   okinawa: "JP47",
 )
 
-
-
-
-
-
-
-
-
-
 #let companies = (
   JR北海道: (
     fill: "#00a1e4",
@@ -146,9 +137,13 @@
       jp-region.nagasaki,
       jp-region.oita,
       jp-region.saga,
+      jp-region.yamaguchi,
     ),
   ),
-  JR総研: (fill: "#c7b299", coverage: jp-region.values()),
+  JR総研: (
+    fill: "#c7b299",
+    coverage: (),
+  ),
   JR貨物: (
     fill: "#003399",
     coverage: {
@@ -236,7 +231,6 @@
       jp-region.tochigi,
       jp-region.gunma,
       jp-region.saitama,
-      jp-region.chiba,
       jp-region.tokyo,
       jp-region.kanagawa,
       jp-region.niigata,
