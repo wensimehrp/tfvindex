@@ -89,7 +89,7 @@
     .contents
     .filter(it => it.type == "directory")
     .map(dir => html.div(
-      class: box-classes + "flex-auto p-2",
+      class: box-classes + "flex-auto p-2 print:break-inside-avoid",
       {
         let (heading-text, ..rest) = dir
           .name
@@ -141,6 +141,8 @@
 
     TFVIndexは、http://trainfrontview.net のアイコンを再編成したものです。\
     利用規約については、http://trainfrontview.net/iconinfo.htm をご参照ください。
+
+    *Use the `Ctrl+P` shortcut to print the page to a PDF file.*
 
     == Icons
   ]
