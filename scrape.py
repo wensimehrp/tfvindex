@@ -72,11 +72,9 @@ async def primary_worker(
                     soup = BeautifulSoup(response.content, "html5lib")
                     for li in soup.select("div#box-icons li"):
                         text_segments = [
-                            seg.strip()
-                            for seg in li.get_text().splitlines()
-                            if seg.strip()
+                            seg.strip() for seg in li.stripped_strings if seg.strip()
                         ]
-                        folder_name = "-".join(text_segments)
+                        folder_name = "++".join(text_segments)
                         folder_name = sanitize_path(folder_name)
                         if not folder_name:
                             folder_name = "unknown_asset"
@@ -92,16 +90,13 @@ async def primary_worker(
                     s_pbar.refresh()
 
                 except httpx.HTTPStatusError as e:
-                    # Explicitly catch 404s or other HTTP errors to break pagination sequence
                     if e.response.status_code == 404:
                         break
-                    raise e  # Let other severe issues bubble up to the outer try block
 
                 # If the URL wasn't paginated to begin with, finish after one execution
                 if not is_paginated:
                     break
 
-                # Increment to the next numerical page
                 current_digit += 1
                 current_url = url_template.format(current_digit)
 
