@@ -175,7 +175,7 @@
     ```.text
 
     #html.div(
-      class: "mx-auto map-container [&_path]:transition-colors relative w-min max-w-full mx-auto mt-25 overflow-scroll",
+      class: "mx-auto map-container [&_path]:transition-colors relative w-min max-w-full mx-auto mt-25 overflow-x-auto",
       {
         let region-bin = jp-region.values().map(k => (k, ())).to-dict()
         for (i, (company-key, val)) in companies.pairs().enumerate() {
