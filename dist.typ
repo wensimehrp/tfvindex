@@ -44,7 +44,9 @@
   )
 }
 
-#let basic(c, page-title: none) = {
+#let box-classes = " bg-transparent dark:bg-zinc-700 border border-gray-500/30 dark:border-transparent "
+
+#let basic(c, page-title: none, header-content: none) = {
   import html: *
   html(lang: "ja", {
     head({
@@ -54,6 +56,7 @@
       title(page-title)
     })
     body(class: "bg-stone-100 dark:bg-zinc-800", {
+      header-content
       article(
         class: (
           "prose",
@@ -68,12 +71,16 @@
         ),
         c,
       )
-      footer(class: "p-5 prose")[
+      footer(class: "p-5 prose dark:prose-invert")[
         Copyright #sym.copyright 2001--2026 #std.link("http://trainfrontview.net/")[Train Front View curoka], All Rights
         Reserved. \ Arranged by Jeremy Gao \@ paiagram.com
       ]
     })
   })
+}
+
+#let normalize-title(s) = {
+  s.replace(regex("[-,]+"), "・").replace("_", " ")
 }
 
 #let data = json("data.json")
@@ -82,7 +89,7 @@
     .contents
     .filter(it => it.type == "directory")
     .map(dir => html.div(
-      class: "p-2 border border-gray-500/30 flex-auto",
+      class: box-classes + "flex-auto p-2",
       {
         let (heading-text, ..rest) = dir
           .name
@@ -116,14 +123,30 @@
     ))
   [#document(
       dir.name.replace("output/", "") + ".html",
-      basic(html.div(class: "flex flex-wrap gap-3", contents.join(
-        parbreak(),
-      ))),
+      basic({
+        title(normalize-title(dir.name.replace("output/", "")))
+        html.div(class: "flex flex-wrap gap-3", contents.join(
+          parbreak(),
+        ))
+      }),
     ) #label(dir.name)]
 }
 
 #let htmls = data.filter(it => it.type == "directory").map(dir => label(dir.name))
-#document("index.html", basic(html.div(
-  class: "flex flex-wrap gap-3 *:flex-auto *:text-center *:border *:border-gray-500/30 *:px-4 *:py-1.5 *:no-underline *:hover:underline",
-  htmls.map(it => link(it, str(it).replace("output/", "").replace(regex("[-,]+"), "・").replace("_", " "))).join(),
-)))
+#document("index.html", basic({
+  [
+    #title[TFVIndex]
+    A reorganization of icons at http://trainfrontview.net. \
+    Please refer to http://trainfrontview.net/iconinfo.htm for the usage policy.
+
+    TFVIndexは、http://trainfrontview.net のアイコンを再編成したものです。\
+    利用規約については、http://trainfrontview.net/iconinfo.htm をご参照ください。
+
+    == Icons
+  ]
+  html.div(
+    class: box-classes.split(regex("\s+")).map(cls => "*:" + cls).join(" ")
+      + " flex flex-wrap gap-3 *:flex-auto *:text-center *:px-4 *:py-1.5 *:no-underline *:hover:underline",
+    htmls.map(it => link(it, normalize-title(str(it).replace("output/", "")))).join(),
+  )
+})) <home>
