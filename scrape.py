@@ -31,7 +31,17 @@ INDEX_URL = "http://trainfrontview.net/sozai.htm"
 
 
 def sanitize_path(path):
-    return path.strip().replace("/", "-").replace("\\", "-").replace(" ", "_")
+    return (
+        path.strip()
+        .replace("/", "-")
+        .replace("\\", "-")
+        .replace(" ", "_")
+        .replace("*", "")
+        .replace("<", "")
+        .replace(">", "")
+        .replace("|", "")
+        .replace("?", "")
+    )
 
 
 # regular expression to match an integer right before the file extension
