@@ -80,7 +80,7 @@
 }
 
 #let normalize-title(s) = {
-  s.replace(regex("[-,]+"), "・").replace("_", " ")
+  s.replace("output/", "").replace(regex("[-,]+"), "・").replace("_", " ")
 }
 
 #let data = json("data.json")
@@ -121,21 +121,119 @@
         )
       },
     ))
+  let normalized-title = normalize-title(dir.name)
   [#document(
       dir.name.replace("output/", "") + ".html",
       basic({
-        title(normalize-title(dir.name.replace("output/", "")))
+        title(normalized-title)
         html.div(class: "flex flex-wrap gap-3", contents.join(
           parbreak(),
         ))
       }),
-    ) #label(dir.name)]
+    ) #label(normalized-title)]
 }
 
-#let htmls = data.filter(it => it.type == "directory").map(dir => label(dir.name))
+#let to-raw-html(content) = {
+  for c in content {
+    if type(c) == dictionary and c.at("tag", default: "") != "" {
+      html.elem(c.tag, attrs: c.attrs, to-raw-html(c.children))
+    }
+  }
+}
+
+#import "prefectures.typ": companies, jp-region
+#let htmls = data.filter(it => it.type == "directory").map(dir => label(normalize-title(dir.name)))
 #document("index.html", basic({
   [
     #title[TFVIndex]
+
+    #let east-japan = (
+      jp-region.akita,
+      jp-region.aomori,
+      jp-region.chiba,
+      jp-region.fukushima,
+      jp-region.gunma,
+      jp-region.ibaraki,
+      jp-region.iwate,
+      jp-region.kanagawa,
+      jp-region.miyagi,
+      jp-region.nagano,
+      jp-region.niigata,
+      jp-region.saitama,
+      jp-region.tochigi,
+      jp-region.tokyo,
+      jp-region.yamagata,
+      jp-region.yamanashi,
+    )
+
+
+    #let style-text = ```css
+    path:hover {
+        fill: red;
+        cursor: pointer;
+    }
+    ```.text
+
+    #html.div(
+      class: "mx-auto map-container [&_path]:transition-colors relative w-min max-w-full mx-auto mt-25 overflow-scroll",
+      {
+        let region-bin = jp-region.values().map(k => (k, ())).to-dict()
+        for (i, (company-key, val)) in companies.pairs().enumerate() {
+          let d = html.div(
+            class: company-key
+              + " absolute border border-gray-500/30 p-1.5 hover:ring min-w-40 text-center transition-all"
+              + " top-"
+              + str(if i < 8 {
+                i * 12 + 1
+              } else if i < 16 {
+                (i - 8) * 12 + 13
+              } else if i < 31 {
+                (i - 16) * 12 + 13
+              } else {
+                (i - 31) * 12 + 73
+              })
+              + " left-"
+              + str(if i < 8 {
+                (8 - i) * 8 - 5
+              } else if i < 16 {
+                (8 - i + 8) * 8 + 28.5
+              } else if i < 31 {
+                (8 - i + 16) * 8 + 140
+              } else {
+                (8 - i + 31) * 8 + 141.5
+              }),
+            company-key,
+          )
+          link(label(company-key + "大"), d)
+          style-text += (
+            val.coverage.map(r => ".map-container:has(." + company-key + ":hover) #" + r).join(",\n")
+              + ```css
+              {
+                fill: #PLACEHOLDER;
+              }
+              ```
+                .text
+                .replace("#PLACEHOLDER", val.fill)
+          )
+          for region in val.coverage {
+            region-bin.at(region).push(company-key)
+          }
+        }
+        for (region, companies) in region-bin {
+          style-text += (
+            companies.map(c => ".map-container:has(#" + region + ":hover) ." + c).join(",\n")
+              + ```css
+              {
+                  background-color: #39c5bb33;
+              }
+              ```.text
+          )
+        }
+        html.style(style-text)
+        to-raw-html(xml("jp.svg"))
+      },
+    )
+
     A reorganization of icons at http://trainfrontview.net. \
     Please refer to http://trainfrontview.net/iconinfo.htm for the usage policy.
 
@@ -148,7 +246,7 @@
   ]
   html.div(
     class: box-classes.split(regex("\s+")).map(cls => "*:" + cls).join(" ")
-      + " flex flex-wrap gap-3 *:flex-auto *:text-center *:px-4 *:py-1.5 *:no-underline *:hover:underline",
-    htmls.map(it => link(it, normalize-title(str(it).replace("output/", "")))).join(),
+      + " flex flex-wrap gap-3 *:flex-auto *:text-center *:px-4 *:py-1.5 *:no-underline *:hover:ring",
+    htmls.map(it => link(it, str(it))).join(),
   )
 })) <home>
