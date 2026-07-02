@@ -37,14 +37,14 @@ jobs:
           nix develop .#default --command sh -c "tree -Jf output/* > data.json"
           nix develop .#default --command ./dist.typ --input root="tfvindex/"
 
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: icons
-          path: output
-
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist/tfvindex"
       - uses: actions/deploy-pages@v4
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: icons
+          path: output

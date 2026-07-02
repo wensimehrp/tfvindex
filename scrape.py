@@ -41,6 +41,8 @@ def sanitize_path(path):
         .replace(">", "")
         .replace("|", "")
         .replace("?", "")
+        .replace(":", "")
+        .replace('"', "")
     )
 
 
