@@ -73,7 +73,9 @@
       )
       footer(class: "p-5 prose dark:prose-invert")[
         Copyright #sym.copyright 2001--2026 #std.link("http://trainfrontview.net/")[Train Front View curoka], All Rights
-        Reserved. \ Arranged by Jeremy Gao \@ paiagram.com
+        Reserved.\
+        Arranged by Jeremy Gao \@ paiagram.com.\
+        Database version: #read("db_version")
       ]
     })
   })
@@ -146,27 +148,6 @@
 #document("index.html", basic({
   [
     #title[TFVIndex]
-
-    #let east-japan = (
-      jp-region.akita,
-      jp-region.aomori,
-      jp-region.chiba,
-      jp-region.fukushima,
-      jp-region.gunma,
-      jp-region.ibaraki,
-      jp-region.iwate,
-      jp-region.kanagawa,
-      jp-region.miyagi,
-      jp-region.nagano,
-      jp-region.niigata,
-      jp-region.saitama,
-      jp-region.tochigi,
-      jp-region.tokyo,
-      jp-region.yamagata,
-      jp-region.yamanashi,
-    )
-
-
     #let style-text = ```css
     path:hover {
         fill: red;
@@ -234,7 +215,7 @@
       },
     )
 
-    A reorganization of icons at http://trainfrontview.net. \
+    TFVIndex is a reorganization of icons at http://trainfrontview.net. \
     Please refer to http://trainfrontview.net/iconinfo.htm for the usage policy.
 
     TFVIndexは、http://trainfrontview.net のアイコンを再編成したものです。\
