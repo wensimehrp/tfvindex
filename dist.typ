@@ -54,6 +54,11 @@
       meta(name: "viewport", content: "width=device-width, initial-scale=1")
       link(rel: "stylesheet", href: "/" + root + "styles.css")
       title(page-title)
+      elem("script", attrs: (
+        defer: "",
+        src: "https://cloud.umami.is/script.js",
+        data-website-id: "1e645081-beea-4836-bd66-ead28c2c1976",
+      ))
     })
     body(class: "bg-stone-100 dark:bg-zinc-800", {
       header-content
