@@ -56,8 +56,8 @@
       title(page-title)
       elem("script", attrs: (
         defer: "",
-        src: "https://cloud.umami.is/script.js",
-        data-website-id: "1e645081-beea-4836-bd66-ead28c2c1976",
+        src: "https://umami-theta-pink.vercel.app/script.js",
+        data-website-id: "bbe83d2b-314a-4023-87e7-765f49b46a0c",
       ))
     })
     body(class: "bg-stone-100 dark:bg-zinc-800", {
