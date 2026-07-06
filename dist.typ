@@ -130,9 +130,9 @@
     ))
   let normalized-title = normalize-title(dir.name)
   [#document(
-      dir.name.replace("output/", "") + ".html",
+      dir.name.replace("output/", "").replace(regex("[\u{1F1E6}-\u{1F1FF}]{2}"), "") + ".html",
       basic({
-        title(normalized-title)
+        title(normalized-title.replace(regex("[\u{1F1E6}-\u{1F1FF}]{2}"), ""))
         html.div(class: "flex flex-wrap gap-3", contents.join(
           parbreak(),
         ))
@@ -233,6 +233,6 @@
   html.div(
     class: box-classes.split(regex("\s+")).map(cls => "*:" + cls).join(" ")
       + " flex flex-wrap gap-3 *:flex-auto *:text-center *:px-4 *:py-1.5 *:no-underline *:hover:ring",
-    htmls.map(it => link(it, str(it))).join(),
+    htmls.map(it => link(it, str(it).replace(regex("[\u{1F1E6}-\u{1F1FF}]{2}"), ""))).join(),
   )
 })) <home>
