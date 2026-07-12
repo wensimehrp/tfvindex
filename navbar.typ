@@ -3,6 +3,8 @@
 // Checkbox for navigation panel
 #input(
   type: "checkbox",
+  // mobile users will figure their way out
+  checked: true,
   id: "sidebar-toggle",
   class: "peer fixed top-0 left-0 translate-x-0 checked:translate-x-72 appearance-none"
     + " w-10 h-25 checked:w-full checked:h-full z-100 md:checked:w-10 md:checked:h-25",
