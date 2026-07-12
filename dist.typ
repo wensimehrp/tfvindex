@@ -1,5 +1,7 @@
-#!/usr/bin/env -S typst compile --features bundle,html --format bundle
+#!/usr/bin/env -S sh -c 'typst c --features bundle,html --format bundle $0 --input root="tfvindex/"; pagefind --site ./dist --output-subdir tfvindex/pagefind'
 #import "@preview/typhoon:0.1.2": _plugin
+#import "romanize.typ": romanize
+#import "data.typ": *
 #let root = sys.inputs.at("root", default: "")
 #let document(root: root, path, ..args) = std.document(root + path, ..args)
 
@@ -29,6 +31,7 @@
     }
 
     ```.text
+      + read("pagefind.css")
       + str(_plugin.generate(
         bytes(
           tailwind-classes.final().join(" ") + "",
@@ -59,38 +62,37 @@
         src: "https://umami-theta-pink.vercel.app/script.js",
         data-website-id: "bbe83d2b-314a-4023-87e7-765f49b46a0c",
       ))
+      let link-path = "/" + root + "pagefind/pagefind-component-ui.css"
+      let script-path = "/" + root + "pagefind/pagefind-component-ui.js"
+      link(href: link-path, rel: "stylesheet")
+      script(src: script-path, type: "module")
+      elem("pagefind-config", attrs: (
+        bundle-path: "/" + root + "pagefind/",
+        base-url: "/",
+      ))
     })
     body(class: "bg-stone-100 dark:bg-zinc-800", {
       header-content
+      include "navbar.typ"
       article(
-        class: (
-          "prose",
-          "prose-headings:font-[M_PLUS_U]",
-          "dark:prose-invert",
-          "max-w-7xl",
-          "mx-auto",
-          "px-5",
-          "my-20",
-          "prose-pre:bg-zinc-900",
-          "prose-pre:rounded-none",
-        ),
-        c,
+        class: "max-w-7xl mx-auto md:peer-checked:ml-72 p-3 lg:px-10 mt-20"
+          + " prose dark:prose-invert prose-headings:font-[M_PLUS_U]"
+          + " prose-pre:bg-zinc-900 prose-pre:rounded-none"
+          + " print:max-w-none print:p-0 print:m-0",
+        c
+          + footer(class: "my-5 prose dark:prose-invert")[
+            Copyright #sym.copyright 2001--2026 #std.link("http://trainfrontview.net/")[Train Front View curoka], All
+            Rights Reserved.\
+            Arranged by Jeremy Gao \@ paiagram.com.\
+            Database version: #read("db_version")
+          ],
       )
-      footer(class: "p-5 prose dark:prose-invert")[
-        Copyright #sym.copyright 2001--2026 #std.link("http://trainfrontview.net/")[Train Front View curoka], All Rights
-        Reserved.\
-        Arranged by Jeremy Gao \@ paiagram.com.\
-        Database version: #read("db_version")
-      ]
     })
   })
 }
 
-#let normalize-title(s) = {
-  s.replace("output/", "").replace(regex("[-,]+"), "・").replace("_", " ")
-}
 
-#let data = json("data.json")
+
 #for dir in data.filter(it => it.type == "directory") {
   let contents = dir
     .contents
@@ -117,6 +119,7 @@
             )
           })
           rest.join[, ]
+          html.span(class: "sr-only", romanize(displayed-text))
         })
         html.div(
           class: "flex flex-wrap gap-2 [&>img]:flex-auto [&>img]:m-0 [&>img]:w-20 [&>img]:h-24 [&>img]:object-contain [image-rendering:pixelated]",
@@ -132,7 +135,8 @@
   [#document(
       dir.name.replace("output/", "").replace(regex("[\u{1F1E6}-\u{1F1FF}]{2}"), "") + ".html",
       basic({
-        title(normalized-title.replace(regex("[\u{1F1E6}-\u{1F1FF}]{2}"), ""))
+        title(normalized-title)
+        html.span(class: "sr-only", romanize(normalized-title))
         html.div(class: "flex flex-wrap gap-3", contents.join(
           parbreak(),
         ))
@@ -149,7 +153,6 @@
 }
 
 #import "prefectures.typ": companies, jp-region
-#let htmls = data.filter(it => it.type == "directory").map(dir => label(normalize-title(dir.name)))
 #document("index.html", basic({
   [
     #title[TFVIndex]
@@ -233,6 +236,6 @@
   html.div(
     class: box-classes.split(regex("\s+")).map(cls => "*:" + cls).join(" ")
       + " flex flex-wrap gap-3 *:flex-auto *:text-center *:px-4 *:py-1.5 *:no-underline *:hover:ring",
-    htmls.map(it => link(it, str(it).replace(regex("[\u{1F1E6}-\u{1F1FF}]{2}"), ""))).join(),
+    htmls.map(it => link(it, str(it))).join(),
   )
 })) <home>

@@ -38,6 +38,8 @@
             pkgs.python314Packages.html5lib
             pkgs.tree
             pkgs.typst
+            pkgs.typstPackages.auto-jrubby_0_3_4
+            pkgs.pagefind
           ];
           UV_PYTHON = "${pkgs.python314}/bin/python";
         };

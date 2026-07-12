@@ -35,7 +35,7 @@ jobs:
       - name: Build site
         run: |
           nix develop .#default --command sh -c "tree -Jf output/* > data.json"
-          nix develop .#default --command ./dist.typ --input root="tfvindex/"
+          nix develop .#default --command ./dist.typ
 
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
