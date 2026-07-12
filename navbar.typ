@@ -4,7 +4,8 @@
 #input(
   type: "checkbox",
   id: "sidebar-toggle",
-  class: "peer fixed top-0 left-0 translate-x-0 checked:translate-x-72 appearance-none w-10 h-25",
+  class: "peer fixed top-0 left-0 translate-x-0 checked:translate-x-72 appearance-none"
+    + " w-10 h-25 checked:w-full checked:h-full z-100 md:checked:w-10 md:checked:h-25",
 )
 // nasty inline JS for memoizing the toggle's state
 #script(
