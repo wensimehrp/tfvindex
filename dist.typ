@@ -82,8 +82,8 @@
           + " print:max-w-none print:p-0 print:!m-0",
         c
           + footer(class: "my-5 prose dark:prose-invert")[
-            Copyright #sym.copyright 2001--2026 #std.link("http://trainfrontview.net/")[Train Front View curoka], All
-            Rights Reserved.\
+            Copyright #sym.copyright 2001--2026 #std.link("https://trainfrontview.sakura.ne.jp/")[Train Front View
+              curoka], All Rights Reserved.\
             Arranged by Jeremy Gao \@ paiagram.com.\
             Database version: #read("db_version")
           ],
@@ -224,11 +224,11 @@
       },
     )
 
-    TFVIndex is a reorganization of icons at http://trainfrontview.net. \
-    Please refer to http://trainfrontview.net/iconinfo.htm for the usage policy.
+    TFVIndex is a reorganization of icons at https://trainfrontview.sakura.ne.jp/. \
+    Please refer to https://trainfrontview.sakura.ne.jp//iconinfo.htm for the usage policy.
 
-    TFVIndexは、http://trainfrontview.net のアイコンを再編成したものです。\
-    利用規約については、http://trainfrontview.net/iconinfo.htm をご参照ください。
+    TFVIndexは、https://trainfrontview.sakura.ne.jp/ のアイコンを再編成したものです。\
+    利用規約については、https://trainfrontview.sakura.ne.jp/iconinfo.htm をご参照ください。
 
     *Use the `Ctrl+P` shortcut to print the page to a PDF file.*
 

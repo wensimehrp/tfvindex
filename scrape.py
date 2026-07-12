@@ -26,8 +26,8 @@ MAX_CONCURRENT_SECONDARY_WORKERS = 25
 # Limit connections to prevent abusing the host
 LIMITS = httpx.Limits(max_keepalive_connections=10, max_connections=50)
 
-BASE_URL = "http://trainfrontview.net/"
-INDEX_URL = "http://trainfrontview.net/sozai.htm"
+BASE_URL = "https://trainfrontview.sakura.ne.jp/"
+INDEX_URL = "https://trainfrontview.sakura.ne.jp/sozai.htm"
 
 
 def sanitize_path(path):
