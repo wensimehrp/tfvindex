@@ -118,8 +118,8 @@
               "↗",
             )
           })
+          html.div(class: "sr-only", [ ] + romanize(displayed-text))
           rest.join[, ]
-          html.span(class: "sr-only", romanize(displayed-text))
         })
         html.div(
           class: "flex flex-wrap gap-2 [&>img]:flex-auto [&>img]:m-0 [&>img]:w-20 [&>img]:h-24 [&>img]:object-contain [image-rendering:pixelated]",
