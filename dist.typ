@@ -78,7 +78,8 @@
         class: "max-w-7xl mx-auto md:peer-checked:ml-72 p-3 lg:px-10 mt-20"
           + " prose dark:prose-invert prose-headings:font-[M_PLUS_U]"
           + " prose-pre:bg-zinc-900 prose-pre:rounded-none"
-          + " print:max-w-none print:p-0 print:m-0",
+          // set an important margin rule for print
+          + " print:max-w-none print:p-0 print:!m-0",
         c
           + footer(class: "my-5 prose dark:prose-invert")[
             Copyright #sym.copyright 2001--2026 #std.link("http://trainfrontview.net/")[Train Front View curoka], All
